@@ -56,12 +56,12 @@ Always branch off an up-to-date `main`:
 ```bash
 git checkout main
 git pull
-git checkout -b person-b-branch
+git checkout -b ending-b
 ```
 
 ### Step 3: Write your story continuation
 
-Open `story.txt` and **append** (do not replace) 2–3 sentences where Sam **calls a friend for help** instead of going to the lighthouse alone.
+Open `story.txt` and **append** (do not replace) 4–5 sentences where Sam **calls a friend for help** instead of going to the lighthouse alone.
 
 Keep the tone consistent with the opening. Do not alter any existing text — only add to the end.
 
@@ -69,20 +69,28 @@ Keep the tone consistent with the opening. Do not alter any existing text — on
 
 ```bash
 git add story.txt
-git commit -m "Person B: Sam calls a friend for help"
+git commit -m "feat(story): Sam calls a friend for help"
 ```
 
-Commit message format: short, present-tense, descriptive. One line is fine.
+This repo enforces **Conventional Commits**. Every commit message must match:
+
+```
+<type>[optional scope]: <description>
+```
+
+Valid types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`
+
+For story content use `feat(story): ...`. The commit-msg hook will reject anything that doesn't match — read the error output, it tells you exactly what's wrong.
 
 ### Step 5: Push and open a Pull Request
 
 ```bash
-git push -u origin person-b-branch
+git push -u origin ending-b
 ```
 
-Then open a PR on GitHub: `person-b-branch → main`
+Then open a PR on GitHub: `ending-b → main`
 
-- Title: `Person B: Sam calls a friend for help`
+- Title: `feat(story): Sam calls a friend for help`
 - Body: Brief description of what you added to the story
 - Do NOT merge yet — wait for Person A to merge their PR first
 
@@ -97,7 +105,7 @@ After Person A merges their PR, yours will show a conflict. Here is the exact re
 ```bash
 git checkout main
 git pull
-git checkout person-b-branch
+git checkout ending-b
 git merge main
 ```
 
@@ -136,13 +144,13 @@ Edit `story.txt` to combine both continuations into a coherent story. A good app
 
 ```bash
 git add story.txt
-git commit -m "Resolve merge conflict: combine both story continuations"
+git commit -m "fix(story): resolve merge conflict combining both continuations"
 git push
 ```
 
 ### Step 5: Merge the PR
 
-Go to GitHub and merge your PR (`person-b-branch → main`). The conflict is resolved, so it should be mergeable now.
+Go to GitHub and merge your PR (`ending-b → main`). The conflict is resolved, so it should be mergeable now.
 
 ---
 
@@ -187,7 +195,7 @@ The GitHub repo link is the deliverable. Submit it once `main` contains the reso
 | View commit history | `git log --oneline` |
 | Abort a bad merge | `git merge --abort` |
 | See remote PR status | `gh pr list` (requires GitHub CLI) |
-| Open PR from CLI | `gh pr create --base main --head person-b-branch --title "..." --body "..."` |
+| Open PR from CLI | `gh pr create --base main --head ending-b --title "..." --body "..."` |
 
 ---
 
@@ -203,14 +211,14 @@ git push
 **Merge went wrong, want to start over:**
 ```bash
 git merge --abort          # if merge is in progress
-git checkout person-b-branch
-git reset --hard origin/person-b-branch   # reset to last pushed state
+git checkout ending-b
+git reset --hard origin/ending-b   # reset to last pushed state
 ```
 
 **Branch is behind and conflicts are a mess:**
 ```bash
 git checkout main && git pull
-git checkout person-b-branch
+git checkout ending-b
 git rebase main   # cleaner history than merge; resolve conflicts the same way
 ```
 
